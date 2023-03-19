@@ -17,7 +17,7 @@ namespace api.allinoneapi.app.Controllers
         }
         ~MainController()
         {
-
+            //
         }
         public void Dispose()
         {
