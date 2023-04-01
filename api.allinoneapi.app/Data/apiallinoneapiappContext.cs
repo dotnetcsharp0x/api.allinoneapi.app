@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace api.allinoneapi.app.Data
 {
-    public class apiallinoneapiappContext : DbContext, IDisposable
+    public class apiallinoneapiappContext : DbContext
     {
         private string connectionString;
         public apiallinoneapiappContext ()
@@ -26,22 +26,13 @@ namespace api.allinoneapi.app.Data
         public DbSet<Crypto_Symbols> Crypto_Symbols { get; set; }
         public DbSet<Crypto_Price> Crypto_Price { get; set; }
 
-        protected override void ConfigureConventions(
-    ModelConfigurationBuilder configurationBuilder)
+        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {
             configurationBuilder.Properties<decimal>()
                 .HavePrecision(20, 10);
         }
         ~apiallinoneapiappContext()
         {
-        }
-        public void Dispose()
-        {
-            try { }
-            finally
-            {
-
-            }
         }
     }
 }
