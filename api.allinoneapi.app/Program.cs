@@ -7,11 +7,14 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<apiallinoneapiappContext>();
+builder.Services.AddCors();
 var app = builder.Build();
 
 
@@ -33,6 +36,11 @@ app.UseHttpsRedirection();
 //app.UseAuthorization();
 app.MapControllers();
 app.UseRouting();
+app.UseCors(builder => builder
+     .AllowAnyOrigin()
+     .AllowAnyMethod()
+     .AllowAnyHeader()
+     );
 app.MapControllerRoute(
    name: "default",
    pattern: "{controller=Home}/{action=Index}/{id?}");

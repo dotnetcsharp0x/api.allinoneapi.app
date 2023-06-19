@@ -1,7 +1,9 @@
 ﻿#nullable disable
 //using System.Data.Entity;
 
-using api.allinoneapi.app.Models;
+//using api.allinoneapi.app.Models;
+using api.allinoneapi.Models;
+using api.allinoneapi.Models.Stocks.Polygon;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +27,9 @@ namespace api.allinoneapi.app.Data
         }
         public DbSet<Crypto_Symbols> Crypto_Symbols { get; set; }
         public DbSet<Crypto_Price> Crypto_Price { get; set; }
+        public DbSet<StockInstruments> StockInstruments { get; set; }
+        public DbSet<StockDescription> StockDescription { get; set; }
+        public DbSet<Binance_CryptoKandles> CryptoKandles { get; set; }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {

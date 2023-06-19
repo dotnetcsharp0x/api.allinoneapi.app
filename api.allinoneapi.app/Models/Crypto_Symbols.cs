@@ -6,5 +6,8 @@
         public string? Symbol { get; set; }
         public string? BaseAsset { get; set; }
         public string? QuoteAsset { get; set; }
+        public float? circulating_supply { get; set; }
+        public float? total_supply { get; set; }
+
     }
 }
