@@ -20,7 +20,9 @@ namespace api.allinoneapi.app.Controllers
         }
         public void Dispose()
         {
-            try { }
+            try {
+                crypto.Dispose();
+            }
             finally
             {
                 GC.Collect();

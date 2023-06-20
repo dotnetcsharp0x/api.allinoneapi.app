@@ -128,7 +128,7 @@ namespace api.allinoneapi.app.Controllers
             await using (apiallinoneapiappContext _context = new apiallinoneapiappContext())
             {
                 await _context.Database.ExecuteSqlRawAsync("SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;");
-                CryptoSymbols = await (from i in _context.StockInstruments where i.market == "stocks" & i.type.ToUpper() == "ETF" select i).AsNoTracking().ToListAsync();
+                CryptoSymbols = await (from i in _context.StockInstruments where i.market == "stocks" && i.type.ToUpper() == "ETF" select i).AsNoTracking().ToListAsync();
             }
             return CryptoSymbols;
         }
@@ -143,7 +143,7 @@ namespace api.allinoneapi.app.Controllers
             await using (apiallinoneapiappContext _context = new apiallinoneapiappContext())
             {
                 await _context.Database.ExecuteSqlRawAsync("SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;");
-                CryptoSymbols = await (from i in _context.StockInstruments where i.market == "stocks" & i.type.ToUpper() == "WARRANT" select i).AsNoTracking().ToListAsync();
+                CryptoSymbols = await (from i in _context.StockInstruments where i.market == "stocks" && i.type.ToUpper() == "WARRANT" select i).AsNoTracking().ToListAsync();
             }
             return CryptoSymbols;
         }
@@ -285,6 +285,7 @@ namespace api.allinoneapi.app.Controllers
                 rsp.takerBuyQuoteVolume = 0;
                 kandles_resp.Add(rsp);
             }
+            Content.Dispose();
             return kandles_resp;
             #endregion
 
