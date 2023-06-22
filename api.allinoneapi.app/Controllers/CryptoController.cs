@@ -112,7 +112,17 @@ namespace api.allinoneapi.app.Controllers
             await using (apiallinoneapiappContext _context = new apiallinoneapiappContext())
             {
                 await _context.Database.ExecuteSqlRawAsync("SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;");
-                CryptoSymbols = await(from i in _context.Crypto_Symbols where i.Symbol == symbol select i).AsNoTracking().ToListAsync();
+                CryptoSymbols = await(from i in _context.Crypto_Symbols where i.Symbol == symbol select new Crypto_Symbols()
+                {
+                    Symbol = i.Symbol,
+                    BaseAsset = i.BaseAsset,
+                    QuoteAsset = i.QuoteAsset,
+                    circulating_supply=i.circulating_supply,
+                    total_supply= i.total_supply,
+                    max_supply  = i.max_supply,
+                    domination = i.domination,
+                    source =i.source,
+                }).AsNoTracking().ToListAsync();
             }
             return CryptoSymbols;
         }

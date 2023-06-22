@@ -2,6 +2,7 @@
 //using System.Data.Entity;
 
 //using api.allinoneapi.app.Models;
+using api.allinoneapi.app.Models.Test;
 using api.allinoneapi.Models;
 using api.allinoneapi.Models.Stocks.Polygon;
 using Microsoft.EntityFrameworkCore;
@@ -30,7 +31,15 @@ namespace api.allinoneapi.app.Data
         public DbSet<StockInstruments> StockInstruments { get; set; }
         public DbSet<StockDescription> StockDescription { get; set; }
         public DbSet<Binance_CryptoKandles> CryptoKandles { get; set; }
+        public DbSet<Test> Test { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Test>((pc =>
+            {
+                pc.HasNoKey();
+            }));
+        }
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {
             configurationBuilder.Properties<decimal>()

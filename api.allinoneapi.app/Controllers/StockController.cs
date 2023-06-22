@@ -1,4 +1,5 @@
 ﻿using api.allinoneapi.app.Data;
+using api.allinoneapi.app.Models.Test;
 using api.allinoneapi.Models;
 using api.allinoneapi.Models.Stocks.Polygon;
 using api.allinoneapi.Models.Stocks.Polygon.Actions;
@@ -10,6 +11,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using Nancy.Json;
 using RestSharp;
+using System.Data;
+using System.Data.Entity.Core.Metadata.Edm;
+using System.Data.Entity.Infrastructure;
+using System.Data.OleDb;
 using System.Linq.Expressions;
 using System.Text;
 
@@ -164,6 +169,28 @@ namespace api.allinoneapi.app.Controllers
         }
         #endregion
 
+
+        #region Test
+        [HttpGet]
+        [Route("Test")]
+        public List<Test> Test()
+        {
+            var tableNames = new List<Test>();
+
+            using (var connection = new apiallinoneapiappContext())
+            {
+                var comps = connection.Test.FromSqlRaw("SELECT Distinct TABLE_NAME as name,TABLE_SCHEMA FROM information_schema.TABLES").ToList();
+                foreach (var company in comps) {
+                    Console.WriteLine(company.name);
+                    Test tst = new Test();
+                    tst.name = company.name;
+                    tst.TABLE_SCHEMA = company.TABLE_SCHEMA;
+                    tableNames.Add(tst);
+                        }
+            }
+            return tableNames;
+        }
+        #endregion
         #region GetPriceDetailed
         [HttpGet]
         [Route("GetPriceDetailed")]
@@ -257,7 +284,7 @@ namespace api.allinoneapi.app.Controllers
             //https://api.polygon.io/v2/aggs/ticker/SPY/range/1/hour/2023-06-01/2023-06-01?adjusted=true&sort=asc&limit=289&apiKey=1IDknqV7XjsFhZRNtwdNcJOtPp9IH0Ji
 
 
-            string url_get = "https://api.polygon.io/v2/aggs/ticker/SPY/range/" + minutes + "/" + intr + "/" + datestart + "/" + dateend + "?adjusted=true&sort=asc&limit=" + lines + "&apiKey=";
+            string url_get = "https://api.polygon.io/v2/aggs/ticker/"+symbol+"/range/" + minutes + "/" + intr + "/" + datestart + "/" + dateend + "?adjusted=true&sort=asc&limit=" + lines + "&apiKey=";
             var url = url_get + api;
             var client = new RestClient(url);
             var request = new RestRequest(url, Method.Get);
