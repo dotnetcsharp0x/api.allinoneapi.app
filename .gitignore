@@ -362,3 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /api.allinoneapi.app/appsettings.json
+/api.allinoneapi.app/appsettings.json
+/api.allinoneapi.app/api.xml
